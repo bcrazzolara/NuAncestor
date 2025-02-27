@@ -87,9 +87,9 @@
         <Name>Chile</Name>
         <CentralBody>Earth</CentralBody>
         <Location>
-          <Latitude units="deg" displayed_units="deg">-24.589</Latitude>
-          <Longitude units="deg" displayed_units="deg">-70.19</Longitude>
-          <Height units="km" displayed_units="m">3.056</Height>
+          <Latitude units="deg" displayed_units="deg">-29.26</Latitude>
+          <Longitude units="deg" displayed_units="deg">-70.74</Longitude>
+          <Height units="m" displayed_units="m">2400</Height>
         </Location>
         <FieldOfView>
           <MaskShape>Cone</MaskShape>
@@ -2319,9 +2319,9 @@
         <Name>LaPalma</Name>
         <CentralBody>Earth</CentralBody>
         <Location>
-          <Latitude units="deg" displayed_units="deg">28.757</Latitude>
-          <Longitude units="deg" displayed_units="deg">-17.88</Longitude>
-          <Height units="m" displayed_units="m">2384</Height>
+          <Latitude units="deg" displayed_units="deg">28.76</Latitude>
+          <Longitude units="deg" displayed_units="deg">-17.89</Longitude>
+          <Height units="m" displayed_units="m">2396</Height>
         </Location>
         <FieldOfView>
           <MaskShape>Cone</MaskShape>
@@ -2731,9 +2731,9 @@
         <Name>SALT</Name>
         <CentralBody>Earth</CentralBody>
         <Location>
-          <Latitude units="deg" displayed_units="deg">-32</Latitude>
-          <Longitude units="deg" displayed_units="deg">21</Longitude>
-          <Height units="km" displayed_units="km">0.0</Height>
+          <Latitude units="deg" displayed_units="deg">-32.38</Latitude>
+          <Longitude units="deg" displayed_units="deg">20.81</Longitude>
+          <Height units="m" displayed_units="m">1798</Height>
         </Location>
         <FieldOfView>
           <MaskShape>Cone</MaskShape>
@@ -3129,9 +3129,9 @@
         <Name>DAG</Name>
         <CentralBody>Earth</CentralBody>
         <Location>
-          <Latitude units="deg" displayed_units="deg">40</Latitude>
-          <Longitude units="deg" displayed_units="deg">41</Longitude>
-          <Height units="km" displayed_units="km">0.0</Height>
+          <Latitude units="deg" displayed_units="deg">39.78</Latitude>
+          <Longitude units="deg" displayed_units="deg">41.23</Longitude>
+          <Height units="m" displayed_units="m">3170</Height>
         </Location>
         <FieldOfView>
           <MaskShape>Cone</MaskShape>
@@ -7344,9 +7344,9 @@
         <Name>Hawaii</Name>
         <CentralBody>Earth</CentralBody>
         <Location>
-          <Latitude units="deg" displayed_units="deg">19.5</Latitude>
-          <Longitude units="deg" displayed_units="deg">-155.3</Longitude>
-          <Height units="km" displayed_units="km">0.0</Height>
+          <Latitude units="deg" displayed_units="deg">19.83</Latitude>
+          <Longitude units="deg" displayed_units="deg">-155.47</Longitude>
+          <Height units="m" displayed_units="m">4145</Height>
         </Location>
         <FieldOfView>
           <MaskShape>Cone</MaskShape>
@@ -14428,7 +14428,7 @@ Console.Show();
 
 
 // Variable Night; Night = Chile.InShadow(Spacecraft1.Epoch);
-Variable InContactChile = 0;
+Variable InContactChile = 0; // -24.589
 TimeSpan BeginTimeChile;
 
 Variable InContactPalma = 0;
@@ -14484,8 +14484,8 @@ Global Vector DistVec;]]></FreeFormScript>
 Variable GSCoverageAngle = 36;
 
 // Defining the hours between two contacts
-Variable x = 16.5; // Time between two contats [h]
-Spacecraft1.I = 0; // Inclination [deg]
+Variable x = 8; // Time between two contats [h]
+Spacecraft1.I = 180; // Inclination [deg]
 Variable T;
 
 // Prograde
@@ -14515,20 +14515,6 @@ Spacecraft1.Epoch = epochValue;
 */
 
 
-// PRN 025 GPS Satellite
-/*
-T = 3600* 24. / 2.0057143612145;
-Spacecraft1.A = (Constants.G * Earth.Mass * (T / (2 * Constants.Pi))^2)^(1./3.);
-Spacecraft1.I = 54.4496;
-Spacecraft1.RAAN = 174.3994;
-Spacecraft1.E = 0.0189617;
-Spacecraft1.W = 240.1268;
-Spacecraft1.TA = 118.0457;
-String epochString = "Oct 12 2024 21:14:26.119392"; //24285.88502453;
-TimeSpan epochValue = epochString.ParseCalendarDate();
-Spacecraft1.Epoch = epochValue;
-*/
-
 
 Report "Orbit Period in hours" to Console;
 Report Spacecraft1.Period/60 to Console;
@@ -14542,23 +14528,6 @@ Report "Time between two contacts" to Console;
 Report x to Console;
 Report "Number of Contacts per day" to Console;
 Report (24/x) to Console;
-
-
-
-
-
-/*
-400km perigee
-8000km apogee
-lta : 12
-icnlination: 116 deg
-semi-major: 
-
-
-Chile: -29, -70
-LaPalma: 28.5, -17.5
-
-*/
 
 
 
@@ -14612,9 +14581,8 @@ EndProcedure;]]></FreeFormScript>
 		Azi = SC.Azimuth(GS);
 		AzVel = (Azi - AziOld)/ TimeStep*3600; // arcsec/s
 		
-		If (abs(ElVel) < ElVelMax and abs(AzVel) < AzVelMax);
+		If (abs(ElVel) <= ElVelMax and abs(AzVel) <= AzVelMax);
 			
-		
 			DistVec.BuildVector(9, GS, SC);
 			DistOld = Dist;
 			Dist = DistVec.Element.Norm(); // [km]
@@ -14702,7 +14670,7 @@ EndProcedure;]]></FreeFormScript>
                       <RHS>
                         <TimeSpanConstant name="Command5_:Condition_:RHS_:Condition_:RHS" isConstant="false" isGlobal="false">
                           <Name>Command5_:Condition_:RHS_:Condition_:RHS</Name>
-                          <value>365</value>
+                          <value>30</value>
                           <Units>days</Units>
                           <metadata dim="0" />
                         </TimeSpanConstant>
@@ -14729,7 +14697,6 @@ EndProcedure;]]></FreeFormScript>
 Call Contact(Spacecraft1, Chile, InContactChile, BeginTimeChile, ContactTimeChile, 
 DistChile, DecChile, RAChile, ElevChile, AziChile, 
 ElVelChile, AzVelChile, AngVelChile, RadVelChile, 10, 600);
-
 
 Call Contact(Spacecraft1, LaPalma, InContactPalma, BeginTimePalma, ContactTimePalma, 
 DistPalma, DecPalma, RAPalma, ElevPalma, AziPalma, 
@@ -14821,11 +14788,11 @@ ElVelDAG, AzVelDAG, AngVelDAG, RadVelDAG, 10, 600);
 SunVector.BuildVector(9, Earth, Sun);
 //Update ViewWindow1;
 
+
+
 /*
-Update ContactGS;
-Update AngVelGS;
-Update ElVelGS;
-Update AzVelGS;
+
+
 //Update Map2D;
 Update AngleGS;
 Update AziGS;
@@ -14834,6 +14801,12 @@ Update RadVelGS;
 Update DistGS;
 Update RAGS;
 Update DecGS;
+
+Update ContactGS;
+Update AngVelGS;
+Update ElVelGS;
+Update AzVelGS;
+
 //Update OrbitParams;
 //Update SatelliteView;
 */
@@ -14858,7 +14831,7 @@ Console.Show();
 
 
 // Variable Night; Night = Chile.InShadow(Spacecraft1.Epoch);
-Variable InContactChile = 0;
+Variable InContactChile = 0; // -24.589
 TimeSpan BeginTimeChile;
 
 Variable InContactPalma = 0;
@@ -14909,8 +14882,8 @@ Global Vector DistVec;
 Variable GSCoverageAngle = 36;
 
 // Defining the hours between two contacts
-Variable x = 16.5; // Time between two contats [h]
-Spacecraft1.I = 0; // Inclination [deg]
+Variable x = 8; // Time between two contats [h]
+Spacecraft1.I = 180; // Inclination [deg]
 Variable T;
 
 // Prograde
@@ -14940,20 +14913,6 @@ Spacecraft1.Epoch = epochValue;
 */
 
 
-// PRN 025 GPS Satellite
-/*
-T = 3600* 24. / 2.0057143612145;
-Spacecraft1.A = (Constants.G * Earth.Mass * (T / (2 * Constants.Pi))^2)^(1./3.);
-Spacecraft1.I = 54.4496;
-Spacecraft1.RAAN = 174.3994;
-Spacecraft1.E = 0.0189617;
-Spacecraft1.W = 240.1268;
-Spacecraft1.TA = 118.0457;
-String epochString = "Oct 12 2024 21:14:26.119392"; //24285.88502453;
-TimeSpan epochValue = epochString.ParseCalendarDate();
-Spacecraft1.Epoch = epochValue;
-*/
-
 
 Report "Orbit Period in hours" to Console;
 Report Spacecraft1.Period/60 to Console;
@@ -14967,23 +14926,6 @@ Report "Time between two contacts" to Console;
 Report x to Console;
 Report "Number of Contacts per day" to Console;
 Report (24/x) to Console;
-
-
-
-
-
-/*
-400km perigee
-8000km apogee
-lta : 12
-icnlination: 116 deg
-semi-major: 
-
-
-Chile: -29, -70
-LaPalma: 28.5, -17.5
-
-*/
 
 
 
@@ -15027,9 +14969,8 @@ Define Procedure Contact(Spacecraft SC, GroundStation GS,
 		Azi = SC.Azimuth(GS);
 		AzVel = (Azi - AziOld)/ TimeStep*3600; // arcsec/s
 		
-		If (abs(ElVel) < ElVelMax and abs(AzVel) < AzVelMax);
+		If (abs(ElVel) <= ElVelMax and abs(AzVel) <= AzVelMax);
 			
-		
 			DistVec.BuildVector(9, GS, SC);
 			DistOld = Dist;
 			Dist = DistVec.Element.Norm(); // [km]
@@ -15090,13 +15031,12 @@ Define Procedure Contact(Spacecraft SC, GroundStation GS,
 
 
 EndProcedure;
-While (Spacecraft1.ElapsedTime < TIMESPAN(365 days));
+While (Spacecraft1.ElapsedTime < TIMESPAN(30 days));
 Time = Spacecraft1.Epoch; // Current Time
 
 Call Contact(Spacecraft1, Chile, InContactChile, BeginTimeChile, ContactTimeChile, 
 DistChile, DecChile, RAChile, ElevChile, AziChile, 
 ElVelChile, AzVelChile, AngVelChile, RadVelChile, 10, 600);
-
 
 Call Contact(Spacecraft1, LaPalma, InContactPalma, BeginTimePalma, ContactTimePalma, 
 DistPalma, DecPalma, RAPalma, ElevPalma, AziPalma, 
@@ -15127,11 +15067,11 @@ Step Spacecraft1;
 SunVector.BuildVector(9, Earth, Sun);
 //Update ViewWindow1;
 
+
+
 /*
-Update ContactGS;
-Update AngVelGS;
-Update ElVelGS;
-Update AzVelGS;
+
+
 //Update Map2D;
 Update AngleGS;
 Update AziGS;
@@ -15140,6 +15080,12 @@ Update RadVelGS;
 Update DistGS;
 Update RAGS;
 Update DecGS;
+
+Update ContactGS;
+Update AngVelGS;
+Update ElVelGS;
+Update AzVelGS;
+
 //Update OrbitParams;
 //Update SatelliteView;
 */
