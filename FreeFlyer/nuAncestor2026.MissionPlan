@@ -14897,7 +14897,7 @@ EndProcedure;]]></FreeFormScript>
                       <RHS>
                         <TimeSpanConstant name="Command7_:Condition_:RHS_:Condition_:RHS" isConstant="false" isGlobal="false">
                           <Name>Command7_:Condition_:RHS_:Condition_:RHS</Name>
-                          <value>365</value>
+                          <value>30</value>
                           <Units>days</Units>
                           <metadata dim="0" />
                         </TimeSpanConstant>
@@ -15015,13 +15015,15 @@ ElVelDAG, AzVelDAG, AngVelDAG, RadVelDAG, MaxElevationSpeed, MaxAzimuthalSpeed);
 SunVector.BuildVector(9, Earth, Sun);
 
 
+
+
 // Different Visualisations of the orbit and several orbit propoerties.
-/*
-Update ViewWindow1;
 Update ContactGS;
-Update AngVelGS;
 Update ElVelGS;
 Update AzVelGS;
+/*
+Update ViewWindow1;
+Update AngVelGS;
 Update Map2D;
 Update AngleGS;
 Update AziGS;
@@ -15264,7 +15266,7 @@ Define Procedure Contact(Spacecraft SC, GroundStation GS,
 
 
 EndProcedure;
-While (Spacecraft1.ElapsedTime < TIMESPAN(365 days));
+While (Spacecraft1.ElapsedTime < TIMESPAN(30 days));
 Time = Spacecraft1.Epoch; // Current Time
 
 Call Contact(Spacecraft1, Chile, InContactChile, BeginTimeChile, ContactTimeChile, 
@@ -15300,13 +15302,15 @@ Step Spacecraft1;
 SunVector.BuildVector(9, Earth, Sun);
 
 
+
+
 // Different Visualisations of the orbit and several orbit propoerties.
-/*
-Update ViewWindow1;
 Update ContactGS;
-Update AngVelGS;
 Update ElVelGS;
 Update AzVelGS;
+/*
+Update ViewWindow1;
+Update AngVelGS;
 Update Map2D;
 Update AngleGS;
 Update AziGS;
